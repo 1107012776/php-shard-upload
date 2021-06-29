@@ -17,7 +17,7 @@ $filePathDir = $fileBaseDir . $md5Hash . '_' . $sha1Hash;
 if (!file_exists($filePathDir)) {
     mkdir($filePathDir, 0777, true);
 }
-// 名字中加入随机数
+
 $target = $filePathDir . '/' . $index . '.' . 'part';
 header('Content-Type:application/json;charset=utf-8');
 $upSize = filesize($avatar['tmp_name']);
