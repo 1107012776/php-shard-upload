@@ -7,16 +7,16 @@ use PhpShardUpload\Components\ServiceTrait;
 class ShardUpload
 {
     use ServiceTrait;
-    protected $file;
-    protected $index;
-    protected $total;
-    protected $size;
-    protected $shardSize;
-    protected $md5Hash;
-    protected $sha1Hash;
-    protected $ext;
-    protected $fileBaseDir;
-    protected $childFileDir;
+    protected $file;  //上传的分块文件对象 $file = $_FILES['data'];
+    protected $index;  //上传的分块索引
+    protected $total; //上传的分块总数量
+    protected $size; //要上传的文件总大小
+    protected $shardSize;  //上传的分块文件大小
+    protected $md5Hash; //要上传的文件的md5Hash
+    protected $sha1Hash;  //要上传的文件的sha1Hash
+    protected $ext; //要上传的文件的后缀
+    protected $fileBaseDir;  //基础文件存储根目录
+    protected $childFileDir; //上传分块保存目录
 
     public function __construct($file, $index, $total, $shardSize, $size, $md5Hash, $sha1Hash, $fileBaseDir)
     {

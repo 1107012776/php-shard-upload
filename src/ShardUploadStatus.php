@@ -9,13 +9,13 @@ use PhpShardUpload\Components\ServiceTrait;
 class ShardUploadStatus
 {
     use ServiceTrait;
-    protected $total;
-    protected $size;
-    protected $shardSize;
-    protected $md5Hash;
-    protected $sha1Hash;
-    protected $fileBaseDir;
-    protected $childFileDir;
+    protected $total; //上传的分块总数量
+    protected $size; //要上传的文件总大小
+    protected $shardSize;  //上传的分块文件大小
+    protected $md5Hash; //要上传的文件的md5Hash
+    protected $sha1Hash;  //要上传的文件的sha1Hash
+    protected $fileBaseDir;  //基础文件存储根目录
+    protected $childFileDir; //上传分块保存目录
 
     public function __construct($total, $shardSize, $size, $md5Hash, $sha1Hash, $fileBaseDir)
     {
