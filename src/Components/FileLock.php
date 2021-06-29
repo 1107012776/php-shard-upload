@@ -15,14 +15,17 @@ class FileLock
     /**
      * 文件路径
      * FileLock constructor.
+     *@param $lockFilePath
+     *@param $is_log
      * @param $lockFilePath
      */
-    public function __construct($lockFilePath)
+    public function __construct($lockFilePath, $is_log = false)
     {
         if (!file_exists($lockFilePath)) {
             file_put_contents($lockFilePath, date('Y-m-d H:i:s'));  //创建文件
         }
         $this->filePath = $lockFilePath;
+        $this->is_log = $is_log;
     }
 
     /**

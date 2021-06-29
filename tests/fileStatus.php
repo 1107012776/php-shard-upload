@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @author lys
  */
@@ -17,7 +18,7 @@ $total = $_POST['total'];
 $md5Hash = $_POST['md5Hash'];
 $sha1Hash = $_POST['sha1Hash'];
 $fileBaseDir = './fileDir/';
-$shard = new ShardUploadStatus($index, $total, $shardSize, $size, $md5Hash, $sha1Hash, $fileBaseDir);
+$shard = new ShardUploadStatus($total, $shardSize, $size, $md5Hash, $sha1Hash, $fileBaseDir);
 $response = $shard->getUploadStatus();
 header('Content-Type:application/json;charset=utf-8');
 echo json_encode($response,JSON_UNESCAPED_UNICODE);

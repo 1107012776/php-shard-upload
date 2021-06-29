@@ -9,7 +9,6 @@ use PhpShardUpload\Components\ServiceTrait;
 class ShardUploadStatus
 {
     use ServiceTrait;
-    protected $index;
     protected $total;
     protected $size;
     protected $shardSize;
@@ -18,9 +17,8 @@ class ShardUploadStatus
     protected $fileBaseDir;
     protected $childFileDir;
 
-    public function __construct($index, $total, $shardSize, $size, $md5Hash, $sha1Hash, $fileBaseDir)
+    public function __construct($total, $shardSize, $size, $md5Hash, $sha1Hash, $fileBaseDir)
     {
-        $this->index = $index;
         $this->total = $total;
         $this->shardSize = $shardSize;
         $this->size = $size;
@@ -34,6 +32,8 @@ class ShardUploadStatus
      */
     public function getUploadStatus()
     {
+        $this->createFileBaseDir();
+        $this->createChildFileDir();
         $filePathDir = $this->childFileDir;
         $total = $this->total;
         $size = $this->size;
