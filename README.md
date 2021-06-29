@@ -11,7 +11,7 @@
 ### 安装
 composer require php-shard-upload
 
-###示例 （具体请查看tests目录）
+### 示例 （具体请查看tests目录）
 ##### html5页面
 ```html
 <!DOCTYPE html>
