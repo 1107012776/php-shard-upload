@@ -12,7 +12,7 @@ composer require lys/php-shard-upload
 2.实现快速上传，即之前上传过，该文件已经存在的，很快就能上传成功，其原理就是文件md5+文件sha1的判断
 
 ### 示例 （具体请查看tests目录）
-##### 1. html5页面
+##### 1. 创建一个 html5 页面
 ```html
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -177,7 +177,7 @@ composer require lys/php-shard-upload
 </html>
 ```
 
-##### 2. upload.php文件
+##### 2.创建一个 upload.php 文件
 ```php
 <?php
 $file_load_path = '../../../autoload.php';
@@ -201,7 +201,7 @@ header('Content-Type:application/json;charset=utf-8');
 echo json_encode($response,JSON_UNESCAPED_UNICODE);
 
 ```
-##### 3. fileStatus.php文件
+##### 3.创建一个 fileStatus.php 文件
 ```php
 <?php
 /**
