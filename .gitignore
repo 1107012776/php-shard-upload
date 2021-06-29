@@ -6,3 +6,4 @@
 *.njsproj
 *.sln
 vendor
+tests/fileDir
