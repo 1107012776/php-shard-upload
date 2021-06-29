@@ -6,6 +6,7 @@ $ext = pathinfo($avatar['name'], PATHINFO_EXTENSION);
 $index = $_POST['index'];
 $total = $_POST['total'];
 $shardSize = $_POST['shardSize'];  //分块大小
+$size = $_POST['size'];  //总大小
 $md5Hash = $_POST['md5Hash'];
 $sha1Hash = $_POST['sha1Hash'];
 $fileBaseDir = './fileDir/';
@@ -19,7 +20,7 @@ if (!file_exists($filePathDir)) {
 // 名字中加入随机数
 $target = $filePathDir . '/' . $index . '.' . 'part';
 header('Content-Type:application/json;charset=utf-8');
-if(filesize($avatar['tmp_name']) != $shardSize){
+if($index != $total && filesize($avatar['tmp_name']) != $shardSize){
     echo json_encode(['msg' => '上传文件存在问题','status' => 0, 'index' => $index], JSON_UNESCAPED_UNICODE);
     exit();
 }
