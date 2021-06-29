@@ -46,6 +46,9 @@ function md5File(file, callback) {
 function sha1File(settings, callback) {
     var hash = [1732584193, -271733879, -1732584194, 271733878, -1009589776];
     var buffer = 1024 * 16 * 64;
+    var currentChunk = 0;
+    // read in chunks of 2MB
+    var chunks = Math.ceil(settings.size / buffer);
     var sha1 = function (block, hash) {
         var words = [];
         var count_parts = 16;
@@ -105,9 +108,7 @@ function sha1File(settings, callback) {
         var end = Math.min(inEnd, file.size);
         var start = inStart;
         var reader = new FileReader();
-        // read in chunks of 2MB
-        var chunks = Math.ceil(file.size / buffer);
-        var currentChunk = 0;
+
         reader.onload = function () {
             console.log("read chunk sha1 ", currentChunk + 1, "of", chunks);
             file.sha1_progress = (end * 100 / file.size);
