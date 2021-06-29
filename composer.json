@@ -1,0 +1,28 @@
+{
+  "name":"lys/php-shard-upload",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "lys",
+      "email": "1107012776@qq.com",
+      "homepage": "https://github.com/1107012776",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.6"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^4.0|^5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "PhpShardUpload\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "PhpShardUpload\\Test\\": "tests/"
+    }
+  }
+}

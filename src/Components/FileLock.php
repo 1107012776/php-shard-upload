@@ -1,5 +1,5 @@
 <?php
-
+namespace PhpShardUpload\Components;
 
 /**
  * 文件锁类

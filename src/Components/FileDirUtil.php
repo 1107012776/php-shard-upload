@@ -1,5 +1,5 @@
 <?php
-
+namespace PhpShardUpload\Components;
 /*
 #文件目录操作类
 
