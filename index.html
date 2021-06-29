@@ -43,7 +43,7 @@
                         console.log('上传成功');
                         return;
                     }
-                    if (this.shardList.length > 0 && this.shardList.indexOf(i + 1)) {
+                    if (this.shardList.length > 0 && this.shardList.indexOf(i + 1) > 0) {
                         ++succeed;
                         $("#output").text(succeed + " / " + shardCount);
                         continue;
@@ -58,6 +58,8 @@
                     form.append("total", shardCount);  //总片数
                     form.append("md5Hash", md5Hash);  //md5Hash
                     form.append("sha1Hash", sha1Hash);  //sha1Hash
+                    form.append('size', this.size);
+                    form.append('shardSize', this.shardSize);
                     form.append("index", i + 1);        //当前是第几片
                     $.ajax({
                         url: "./upload.php",
@@ -66,12 +68,19 @@
                         async: true,        //异步
                         processData: false,  //很重要，告诉jquery不要对form进行处理
                         contentType: false,  //很重要，指定为false才能形成正确的Content-Type
-                        success: function () {
+                        success: function (data) {
+                            if(parseInt(data.status) === 0){
+                                console.log('该分片上传失败'+(i + 1));
+                                return;
+                            }
                             ++succeed;
                             $("#output").text(succeed + " / " + shardCount);
+                        },
+                        error: function (data) {
+                            console.log(data);
+                            console.log('该分片上传失败'+(i + 1));
                         }
                     });
-
                 }
             },
             monitor: function (callback) {
@@ -90,6 +99,8 @@
                     processData: false,  //很重要，告诉jquery不要对form进行处理
                     contentType: false,  //很重要，指定为false才能形成正确的Content-Type
                     success: function (data) {
+                        console.log(data);
+                        fileUploadObj.shardList = data.list;
                         if (parseInt(data.status) === 1) {  //上传成功
                             fileUploadObj.uploadSuccess = true;
                             $("#output").text(fileUploadObj.shardCount + " / " + fileUploadObj.shardCount);
@@ -99,8 +110,6 @@
                         if (callback !== undefined) {
                             callback();
                         }
-                        console.log(data);
-                        fileUploadObj.shardList = data.list;
                         window.setTimeout(function () {
                             fileUploadObj.monitor();
                         }, 1000);

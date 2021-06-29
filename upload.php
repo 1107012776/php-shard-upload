@@ -20,13 +20,18 @@ if (!file_exists($filePathDir)) {
 // 名字中加入随机数
 $target = $filePathDir . '/' . $index . '.' . 'part';
 header('Content-Type:application/json;charset=utf-8');
-if($index != $total && filesize($avatar['tmp_name']) != $shardSize){
-    echo json_encode(['msg' => '上传文件存在问题','status' => 0, 'index' => $index], JSON_UNESCAPED_UNICODE);
+$upSize = filesize($avatar['tmp_name']);
+if ($index != $total && $upSize != $shardSize) {
+    echo json_encode(['msg' => '上传文件存在问题', 'status' => 0, 'index' => $index], JSON_UNESCAPED_UNICODE);
+    exit();
+}
+if ($index == $total && $upSize != ($size - $shardSize * ($index - 1))) {  //最后一个分块文件也要判断下的
+    echo json_encode(['msg' => '上传文件存在问题', 'status' => 0, 'index' => $index], JSON_UNESCAPED_UNICODE);
     exit();
 }
 // 移动的目标路径中文件夹一定是一个已经存在的目录
 if (!move_uploaded_file($avatar['tmp_name'], $target)) {
-    echo json_encode(['msg' => '上传失败','status' => 0, 'index' => $index], JSON_UNESCAPED_UNICODE);
+    echo json_encode(['msg' => '上传失败', 'status' => 0, 'index' => $index], JSON_UNESCAPED_UNICODE);
     exit();
 }
-echo json_encode(['msg' => '上传成功','status' => 1, 'index' => $index], JSON_UNESCAPED_UNICODE);
+echo json_encode(['msg' => '上传成功', 'status' => 1, 'index' => $index], JSON_UNESCAPED_UNICODE);
