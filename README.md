@@ -9,7 +9,7 @@
 2.实现快速上传，即之前上传过，该文件已经存在的，很快就能上传成功，其原理就是文件md5+文件sha1的判断
 
 ### 安装
-composer require php-shard-upload
+composer require lys/php-shard-upload
 
 ### 示例 （具体请查看tests目录）
 ##### html5页面
