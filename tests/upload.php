@@ -1,4 +1,5 @@
 <?php
+namespace PhpShardUpload\Test;
 $file_load_path = '../../../autoload.php';
 if (file_exists($file_load_path)) {
     include $file_load_path;

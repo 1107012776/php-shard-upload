@@ -1,5 +1,5 @@
 <?php
-
+namespace PhpShardUpload\Test;
 /**
  * @author lys
  */
