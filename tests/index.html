@@ -100,7 +100,7 @@
                     contentType: false,  //很重要，指定为false才能形成正确的Content-Type
                     success: function (data) {
                         console.log(data);
-                        fileUploadObj.shardList = data.list;
+                        fileUploadObj.shardList = data.data.list;
                         if (parseInt(data.status) === 1) {  //上传成功
                             fileUploadObj.uploadSuccess = true;
                             $("#output").text(fileUploadObj.shardCount + " / " + fileUploadObj.shardCount);
