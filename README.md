@@ -12,7 +12,7 @@ composer require lys/php-shard-upload
 2.实现快速上传，即之前上传过，该文件已经存在的，很快就能上传成功，其原理就是文件md5+文件sha1的判断
 
 ### 示例 （具体请查看tests目录）
-##### html5页面
+##### 1. html5页面
 ```html
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -177,57 +177,53 @@ composer require lys/php-shard-upload
 </html>
 ```
 
-##### upload.php文件
+##### 2. upload.php文件
 ```php
 <?php
-    $file_load_path = '../../../autoload.php';
-    if (file_exists($file_load_path)) {
-        include $file_load_path;
-    } else {
-        include '../vendor/autoload.php';
-    }
-    use PhpShardUpload\ShardUpload;
-    $file = $_FILES['data'];
-    $index = $_POST['index'];
-    $total = $_POST['total'];
-    $shardSize = $_POST['shardSize'];  //分块大小
-    $size = $_POST['size'];  //总大小
-    $md5Hash = $_POST['md5Hash'];
-    $sha1Hash = $_POST['sha1Hash'];
-    $fileBaseDir = './fileDir/';
-    $shard = new ShardUpload($file, $index, $total, $shardSize, $size, $md5Hash, $sha1Hash, $fileBaseDir);
-    $response = $shard->upload();
-    header('Content-Type:application/json;charset=utf-8');
-    echo json_encode($response,JSON_UNESCAPED_UNICODE);
+$file_load_path = '../../../autoload.php';
+if (file_exists($file_load_path)) {
+    include $file_load_path;
+} else {
+    include '../vendor/autoload.php';
+}
+use PhpShardUpload\ShardUpload;
+$file = $_FILES['data'];
+$index = $_POST['index'];
+$total = $_POST['total'];
+$shardSize = $_POST['shardSize'];  //分块大小
+$size = $_POST['size'];  //总大小
+$md5Hash = $_POST['md5Hash'];
+$sha1Hash = $_POST['sha1Hash'];
+$fileBaseDir = './fileDir/';
+$shard = new ShardUpload($file, $index, $total, $shardSize, $size, $md5Hash, $sha1Hash, $fileBaseDir);
+$response = $shard->upload();
+header('Content-Type:application/json;charset=utf-8');
+echo json_encode($response,JSON_UNESCAPED_UNICODE);
 
 ```
-##### fileStatus.php文件
+##### 3. fileStatus.php文件
 ```php
 <?php
-
-    /**
-     * @author lys
-     */
-    $file_load_path = '../../../autoload.php';
-    if (file_exists($file_load_path)) {
-        include $file_load_path;
-    } else {
-        include '../vendor/autoload.php';
-    }
-    
-    
-    use PhpShardUpload\ShardUploadStatus;
-    $size = $_POST['size'];   //文件总大小
-    $shardSize = $_POST['shardSize'];  //文件分块大小
-    $total = $_POST['total'];
-    $md5Hash = $_POST['md5Hash'];
-    $sha1Hash = $_POST['sha1Hash'];
-    $fileBaseDir = './fileDir/';
-    $shard = new ShardUploadStatus($total, $shardSize, $size, $md5Hash, $sha1Hash, $fileBaseDir);
-    $response = $shard->getUploadStatus();
-    header('Content-Type:application/json;charset=utf-8');
-    echo json_encode($response,JSON_UNESCAPED_UNICODE);
-
+/**
+ * @author lys
+ */
+$file_load_path = '../../../autoload.php';
+if (file_exists($file_load_path)) {
+    include $file_load_path;
+} else {
+    include '../vendor/autoload.php';
+}
+use PhpShardUpload\ShardUploadStatus;
+$size = $_POST['size'];   //文件总大小
+$shardSize = $_POST['shardSize'];  //文件分块大小
+$total = $_POST['total'];
+$md5Hash = $_POST['md5Hash'];
+$sha1Hash = $_POST['sha1Hash'];
+$fileBaseDir = './fileDir/';
+$shard = new ShardUploadStatus($total, $shardSize, $size, $md5Hash, $sha1Hash, $fileBaseDir);
+$response = $shard->getUploadStatus();
+header('Content-Type:application/json;charset=utf-8');
+echo json_encode($response,JSON_UNESCAPED_UNICODE);
 
 ```
 
