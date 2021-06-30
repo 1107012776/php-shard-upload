@@ -3,6 +3,9 @@
 该项目可以正常运行，入口为index.html，需要正确配置fileDir的读写权限
 ### 安装
 composer require lys/php-shard-upload
+### 注意
+该包必须通过composer2+ 安装 
+您可以使用composer self-update --2迁移到它。如果遇到问题，您可以随时使用 返回composer self-update --1
 
 ### 环境
 必须配置上传允许数据流大于2M  在php.ini里面或者nginx里面配置
