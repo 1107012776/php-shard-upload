@@ -103,7 +103,8 @@
                         fileUploadObj.shardList = data.data.list;
                         if (parseInt(data.status) === 1) {  //上传成功
                             fileUploadObj.uploadSuccess = true;
-                            $("#output").text(fileUploadObj.shardCount + " / " + fileUploadObj.shardCount+'（上传成功）');
+                            downUrl = './fileDown.php?md5Hash='+fileUploadObj.md5Hash+'&sha1Hash='+fileUploadObj.sha1Hash+'&name='+encodeURIComponent(fileUploadObj.name);
+                            $("#output").html(fileUploadObj.shardCount + " / " + fileUploadObj.shardCount+'（上传成功）<a href="'+downUrl+'" target="_blank">下载</a>');
                             console.log('上传成功monitor');
                             return;
                         }
