@@ -125,6 +125,7 @@ composer require lys/php-shard-upload
                             downUrl = './fileDown.php?md5Hash='+fileUploadObj.md5Hash+'&sha1Hash='+fileUploadObj.sha1Hash+'&name='+encodeURIComponent(fileUploadObj.name);
                             $("#output").html(fileUploadObj.shardCount + " / " + fileUploadObj.shardCount+'（上传成功）<a href="'+downUrl+'" target="_blank">下载</a>');
                             console.log('上传成功monitor');
+                            $("#upload").removeAttr("disabled");
                             return;
                         }
                         if (callback !== undefined) {
@@ -149,6 +150,7 @@ composer require lys/php-shard-upload
                 $("#upload").click($.proxy(this.upload, this));
             },
             upload: function () {
+                $("#upload").attr("disabled","disabled");
                 var fileUploadObj = new fileUploadClass();
                 var file = $("#file")[0].files[0]; //文件对象
                 fileUploadObj.file = file;
