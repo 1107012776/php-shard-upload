@@ -58,6 +58,8 @@ class ShardUploadStatus
         $fileIndex = $filename . '.index';
         if (file_exists($fileIndex)) {
             $index = file_get_contents($fileIndex);
+        }else{
+            $index = 0;
         }
         $util->createFile($temp);
         $fp = fopen($temp, "w+");
