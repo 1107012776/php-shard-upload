@@ -122,7 +122,7 @@ composer require lys/php-shard-upload
                         fileUploadObj.shardList = data.data.list;
                         if (parseInt(data.status) === 1) {  //上传成功
                             fileUploadObj.uploadSuccess = true;
-                            $("#output").text(fileUploadObj.shardCount + " / " + fileUploadObj.shardCount);
+                            $("#output").text(fileUploadObj.shardCount + " / " + fileUploadObj.shardCount+'（上传成功）');
                             console.log('上传成功monitor');
                             return;
                         }
@@ -152,6 +152,7 @@ composer require lys/php-shard-upload
                 var file = $("#file")[0].files[0]; //文件对象
                 fileUploadObj.file = file;
                 fileUploadObj.shardInit(file);
+                $("#output").text('文件识别中...');
                 md5File(file, function (md5Hash) {
                     fileUploadObj.md5Hash = md5Hash;
                     sha1File(file, function (sha1Hash) {
