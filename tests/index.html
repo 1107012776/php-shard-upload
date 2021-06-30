@@ -133,6 +133,7 @@
                 var file = $("#file")[0].files[0]; //文件对象
                 fileUploadObj.file = file;
                 fileUploadObj.shardInit(file);
+                $("#output").text('文件识别中...');
                 md5File(file, function (md5Hash) {
                     fileUploadObj.md5Hash = md5Hash;
                     sha1File(file, function (sha1Hash) {
