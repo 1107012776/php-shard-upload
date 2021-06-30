@@ -22,7 +22,7 @@ $shard = new ShardUploadStatus($total, $shardSize, $size, $md5Hash, $sha1Hash, $
 $response = $shard->getUploadStatus();
 if($response['status'] == 1){
    $manage = new \PhpShardUpload\FileManage($md5Hash, $sha1Hash, $fileBaseDir);
-   var_dump($manage->getUploadSuccessFilePath()); //已成功上传的文件路径
+//   var_dump($manage->getUploadSuccessFilePath()); //已成功上传的文件路径
 }
 header('Content-Type:application/json;charset=utf-8');
 echo json_encode($response,JSON_UNESCAPED_UNICODE);
