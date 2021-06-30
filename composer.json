@@ -3,7 +3,7 @@
   "description": "前端Javascript+Html5+后端PHP分块上传文件，PHP分块上传大文件",
   "keywords": ["php-shard-upload", "PHP", "Javascript", "Html5"],
   "homepage": "https://github.com/1107012776/php-shard-upload",
-  "Language": "php",
+  "language": "php",
   "type": "library",
   "license": "Apache-2.0",
   "authors": [
