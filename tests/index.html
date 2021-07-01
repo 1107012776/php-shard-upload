@@ -42,7 +42,7 @@
                 var name = this.name;   //文件名
                 var size = this.size;       //总大小
                 var shardCount = this.shardCount;  //总片数
-                for (var i = this.uploadIndex; i < this.uploadIndex + 10; ++i) {
+                for (var i = this.uploadIndex; i < this.uploadIndex + batchUploadCount; ++i) {
                     if (i >= this.shardCount) {
                         console.log('遍历完全部的块了');
                         return;
