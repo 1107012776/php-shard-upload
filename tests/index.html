@@ -84,6 +84,10 @@
                                 console.log('该分片上传失败' + (i + 1));
                                 return;
                             }
+                            if(parseInt(data.status) === -1){
+                                $("#output").text("上传失败，系统磁盘空间不足");
+                                return;
+                            }
                             fileUploadObj.succeed++;
                             $("#output").text(fileUploadObj.succeed + " / " + shardCount);
                             if (batchUploadCount <= 0) {
