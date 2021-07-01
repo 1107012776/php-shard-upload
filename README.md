@@ -57,6 +57,7 @@ composer require lys/php-shard-upload
                 this.upload(file, md5Hash, sha1Hash, 10);
             },
             upload: function (file, md5Hash, sha1Hash, batchUploadCount) {
+                var bitchCountRecord = batchUploadCount;
                 var shardSize = this.shardSize;   //以2MB为一个分片
                 var name = this.name;   //文件名
                 var size = this.size;       //总大小
@@ -105,8 +106,8 @@ composer require lys/php-shard-upload
                             fileUploadObj.succeed++;
                             $("#output").text(fileUploadObj.succeed + " / " + shardCount);
                             if (batchUploadCount <= 0) {
-                                fileUploadObj.uploadIndex += 10;
-                                fileUploadObj.upload(file, md5Hash, sha1Hash, 10);
+                                fileUploadObj.uploadIndex += bitchCountRecord;
+                                fileUploadObj.upload(file, md5Hash, sha1Hash, bitchCountRecord);
                             }
                         },
                         error: function (data) {
@@ -114,8 +115,8 @@ composer require lys/php-shard-upload
                             console.log('该分片上传失败' + (i + 1));
                             batchUploadCount--;
                             if (batchUploadCount <= 0) {
-                                fileUploadObj.uploadIndex += 10;
-                                fileUploadObj.upload(file, md5Hash, sha1Hash, 10);
+                                fileUploadObj.uploadIndex += bitchCountRecord;
+                                fileUploadObj.upload(file, md5Hash, sha1Hash, bitchCountRecord);
                             }
                         }
                     });
