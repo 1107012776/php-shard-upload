@@ -39,8 +39,10 @@ composer require lys/php-shard-upload
             this.sha1Hash = '';  //文件sha1Hash
             this.file = null;  //文件
             this.shardCount = 0;  //总片数
+            this.succeed = 0;  //上传个数
             this.uploadSuccess = false,
                 this.shardList = []; //已上传分块列表
+            this.uploadIndex = 0;
         }
 
         fileUploadClass.prototype = {
@@ -52,19 +54,25 @@ composer require lys/php-shard-upload
                 this.shardCount = Math.ceil(this.size / this.shardSize);  //总片数
             },
             uploadTo: function (file, md5Hash, sha1Hash) {
+                this.upload(file, md5Hash, sha1Hash, 10);
+            },
+            upload: function (file, md5Hash, sha1Hash, batchUploadCount) {
                 var shardSize = this.shardSize;   //以2MB为一个分片
                 var name = this.name;   //文件名
                 var size = this.size;       //总大小
-                var succeed = 0;
                 var shardCount = this.shardCount;  //总片数
-                for (var i = 0; i < shardCount; ++i) {
+                for (var i = this.uploadIndex; i < this.uploadIndex + batchUploadCount; ++i) {
+                    if (i >= this.shardCount) {
+                        console.log('遍历完全部的块了');
+                        return;
+                    }
                     if (this.uploadSuccess) {
                         console.log('上传成功');
                         return;
                     }
                     if (this.shardList.length > 0 && this.shardList.indexOf(i + 1) > 0) {
-                        ++succeed;
-                        $("#output").text(succeed + " / " + shardCount);
+                        this.succeed++;
+                        $("#output").text(this.succeed + " / " + shardCount);
                         continue;
                     }
                     //计算每一片的起始与结束位置
@@ -80,6 +88,7 @@ composer require lys/php-shard-upload
                     form.append('size', this.size);
                     form.append('shardSize', this.shardSize);
                     form.append("index", i + 1);        //当前是第几片
+                    var fileUploadObj = this;
                     $.ajax({
                         url: "./upload.php",
                         type: "POST",
@@ -88,16 +97,26 @@ composer require lys/php-shard-upload
                         processData: false,  //很重要，告诉jquery不要对form进行处理
                         contentType: false,  //很重要，指定为false才能形成正确的Content-Type
                         success: function (data) {
-                            if(parseInt(data.status) === 0){
-                                console.log('该分片上传失败'+(i + 1));
+                            batchUploadCount--;
+                            if (parseInt(data.status) === 0) {
+                                console.log('该分片上传失败' + (i + 1));
                                 return;
                             }
-                            ++succeed;
-                            $("#output").text(succeed + " / " + shardCount);
+                            fileUploadObj.succeed++;
+                            $("#output").text(fileUploadObj.succeed + " / " + shardCount);
+                            if (batchUploadCount <= 0) {
+                                fileUploadObj.uploadIndex += 10;
+                                fileUploadObj.upload(file, md5Hash, sha1Hash, 10);
+                            }
                         },
                         error: function (data) {
                             console.log(data);
-                            console.log('该分片上传失败'+(i + 1));
+                            console.log('该分片上传失败' + (i + 1));
+                            batchUploadCount--;
+                            if (batchUploadCount <= 0) {
+                                fileUploadObj.uploadIndex += 10;
+                                fileUploadObj.upload(file, md5Hash, sha1Hash, 10);
+                            }
                         }
                     });
                 }
@@ -122,8 +141,8 @@ composer require lys/php-shard-upload
                         fileUploadObj.shardList = data.data.list;
                         if (parseInt(data.status) === 1) {  //上传成功
                             fileUploadObj.uploadSuccess = true;
-                            downUrl = './fileDown.php?md5Hash='+fileUploadObj.md5Hash+'&sha1Hash='+fileUploadObj.sha1Hash+'&name='+encodeURIComponent(fileUploadObj.name);
-                            $("#output").html(fileUploadObj.shardCount + " / " + fileUploadObj.shardCount+'（上传成功）<a href="'+downUrl+'" target="_blank">下载</a>');
+                            downUrl = './fileDown.php?md5Hash=' + fileUploadObj.md5Hash + '&sha1Hash=' + fileUploadObj.sha1Hash + '&name=' + encodeURIComponent(fileUploadObj.name);
+                            $("#output").html(fileUploadObj.shardCount + " / " + fileUploadObj.shardCount + '（上传成功）<a href="' + downUrl + '" target="_blank">下载</a>');
                             console.log('上传成功monitor');
                             $("#upload").removeAttr("disabled");
                             return;
@@ -150,7 +169,7 @@ composer require lys/php-shard-upload
                 $("#upload").click($.proxy(this.upload, this));
             },
             upload: function () {
-                $("#upload").attr("disabled","disabled");
+                $("#upload").attr("disabled", "disabled");
                 var fileUploadObj = new fileUploadClass();
                 var file = $("#file")[0].files[0]; //文件对象
                 fileUploadObj.file = file;
