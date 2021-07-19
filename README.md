@@ -40,8 +40,8 @@ composer require lys/php-shard-upload
             this.file = null;  //文件
             this.shardCount = 0;  //总片数
             this.succeed = 0;  //上传个数
-            this.uploadSuccess = false,
-                this.shardList = []; //已上传分块列表
+            this.uploadSuccess = false;
+            this.shardList = []; //已上传分块列表
             this.uploadIndex = 0;
         }
 
@@ -74,6 +74,11 @@ composer require lys/php-shard-upload
                     if (this.shardList.length > 0 && this.shardList.indexOf(i + 1) > 0) {
                         this.succeed++;
                         $("#output").text(this.succeed + " / " + shardCount);
+                        batchUploadCount--;
+                        if (batchUploadCount <= 0) {
+                            this.uploadIndex += bitchCountRecord;
+                            this.upload(file, md5Hash, sha1Hash, bitchCountRecord);
+                        }
                         continue;
                     }
                     //计算每一片的起始与结束位置
@@ -101,6 +106,10 @@ composer require lys/php-shard-upload
                             batchUploadCount--;
                             if (parseInt(data.status) === 0) {
                                 console.log('该分片上传失败' + (i + 1));
+                                return;
+                            }
+                            if(parseInt(data.status) === -1){
+                                $("#output").text("上传失败，系统磁盘空间不足");
                                 return;
                             }
                             fileUploadObj.succeed++;

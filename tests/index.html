@@ -21,8 +21,8 @@
             this.file = null;  //文件
             this.shardCount = 0;  //总片数
             this.succeed = 0;  //上传个数
-            this.uploadSuccess = false,
-                this.shardList = []; //已上传分块列表
+            this.uploadSuccess = false;
+            this.shardList = []; //已上传分块列表
             this.uploadIndex = 0;
         }
 
@@ -55,6 +55,11 @@
                     if (this.shardList.length > 0 && this.shardList.indexOf(i + 1) > 0) {
                         this.succeed++;
                         $("#output").text(this.succeed + " / " + shardCount);
+                        batchUploadCount--;
+                        if (batchUploadCount <= 0) {
+                            this.uploadIndex += bitchCountRecord;
+                            this.upload(file, md5Hash, sha1Hash, bitchCountRecord);
+                        }
                         continue;
                     }
                     //计算每一片的起始与结束位置
