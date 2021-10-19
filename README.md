@@ -1,6 +1,7 @@
 # php-shard-upload
 前端Javascript+Html5+后端PHP分块上传文件，PHP分块上传大文件
 该项目可以正常运行，入口为index.html，需要正确配置fileDir的读写权限
+目前有测试过上传1.5G左右的没有问题（未测试更大的文件），理论上更大的文件也是可以的，（更大的）原理是一样的
 ### 安装
 composer require lys/php-shard-upload
 ### 注意
