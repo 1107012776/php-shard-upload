@@ -6,7 +6,6 @@ namespace PhpShardUpload\Components;
  * getRange: 获取header中Range
  * https://www.jb51.net/article/189099.htm
  */
-set_time_limit(0);
 class FileDownload{
 
     /** 下载
