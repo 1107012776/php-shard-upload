@@ -267,3 +267,8 @@ echo json_encode($response,JSON_UNESCAPED_UNICODE);
 
 ```
 
+## Page visitor counter
+
+![visitor counter](https://profile-counter.glitch.me/1107012776_php-shard-upload/count.svg)
+
+
