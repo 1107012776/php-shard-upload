@@ -267,7 +267,7 @@ echo json_encode($response,JSON_UNESCAPED_UNICODE);
 
 ```
 
-##### 4.创建一个fileDown.php文件
+##### 4.创建一个 fileDown.php 文件
 ```php
 <?php
 
